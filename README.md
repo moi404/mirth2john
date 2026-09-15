@@ -20,21 +20,11 @@ L'outil supporte **automatiquement** les deux formats utilisés par Mirth Connec
 
 ---
 
-## 🎯 Cas d'usage
-
-- 🔐 **Tests d'intrusion** sur des instances Mirth Connect
-- 🏴 **CTF** impliquant Mirth Connect (ex: box HackTheBox *Interpreter*)
-- 🔍 **Audits de sécurité** d'applications healthcare
-- 📚 **Recherche** sur les schémas de stockage de mots de passe
-
----
-
 ## ⚙️ Installation
 
 ### Prérequis
 
 - Python 3.8 ou supérieur
-- Aucune dépendance externe (uniquement la bibliothèque standard)
 
 ### Installation rapide
 
@@ -43,19 +33,6 @@ git clone https://github.com/moi404/mirth2john.git
 cd mirth2john
 chmod +x mirth2john.py
 sudo cp mirth2john.py /usr/local/bin/mirth2john
-```
-
-### Installation sans privilèges root
-
-```bash
-mkdir -p ~/.local/bin
-cp mirth2john.py ~/.local/bin/mirth2john
-chmod +x ~/.local/bin/mirth2john
-export PATH="$HOME/.local/bin:$PATH"
-
-# Pour rendre le PATH permanent :
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-source ~/.bashrc
 ```
 
 ---
