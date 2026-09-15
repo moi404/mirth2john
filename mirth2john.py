@@ -57,6 +57,15 @@ MODERN_ALGO = "pbkdf2-sha256"
 # ------------------------------
 # Fonctions utilitaires
 # ------------------------------
+def b64_john(data: bytes) -> str:
+    """
+    Encode en Base64 selon l'alphabet utilisé par John the Ripper :
+      - padding '=' supprimé
+      - '+' remplacé par '.'
+    """
+    return base64.b64encode(data).decode().rstrip("=").replace("+", ".")
+
+
 def decode_base64_hash(encoded: str):
     """Décode un hash Mirth en Base64, tolérant les espaces et padding manquant."""
     encoded = encoded.strip()
@@ -90,8 +99,9 @@ def convert_legacy(raw: bytes) -> str:
     """Format legacy : SHA256(salt + password), salt = 8 octets, 1000 itérations."""
     salt = raw[:LEGACY_SALT_SIZE]
     digest = raw[LEGACY_SALT_SIZE:]
-    salt_b64 = base64.b64encode(salt).decode().rstrip("=")
-    hash_b64 = base64.b64encode(digest).decode().rstrip("=")
+    # John utilise l'alphabet Base64 modifié aussi pour $dynamic_82$
+    salt_b64 = b64_john(salt)
+    hash_b64 = b64_john(digest)
     return f"$dynamic_82${hash_b64}${salt_b64}"
 
 
@@ -99,8 +109,9 @@ def convert_modern(raw: bytes) -> str:
     """Format moderne : PBKDF2WithHmacSHA256, 600000 itérations, salt = 8 octets."""
     salt = raw[:MODERN_SALT_SIZE]
     digest = raw[MODERN_SALT_SIZE:]
-    salt_b64 = base64.b64encode(salt).decode().rstrip("=")
-    hash_b64 = base64.b64encode(digest).decode().rstrip("=")
+    # Encodage compatible John : '+' -> '.' et padding '=' supprimé
+    salt_b64 = b64_john(salt)
+    hash_b64 = b64_john(digest)
     return f"${MODERN_ALGO}${MODERN_ITERATIONS}${salt_b64}${hash_b64}"
 
 
