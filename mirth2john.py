@@ -17,6 +17,32 @@ import base64
 import sys
 
 # ------------------------------
+# Bannière ASCII
+# ------------------------------
+BANNER = r"""
+by : moi404
+                                            )     )      )  
+                        )        (       ( /(  ( /(   ( /(  
+                       (      (  )\      )\()) )\())  )\()) 
+                       )\  '  )\((_)    ((_)\ ((_)\  ((_)\  
+                     _((_))  ((_)(_)   | | (_)/  (_)| | (_) 
+                    | '  \()/ _ \| |   |_  _|| () | |_  _|  
+                    |_|_|_| \___/|_|_____|_|  \__/    |_|   
+                                   |_____|                  
+                         +-+-+-+-+-+-+-+ +-+-+-+-+-+-+
+                         |e|t|h|i|c|a|l| |h|a|c|k|e|r|
+                         +-+-+-+-+-+-+-+ +-+-+-+-+-+-+
+                              mirth2john v1.0
+                  Convert Mirth Connect hashes to John format
+"""
+
+
+def print_banner():
+    """Affiche la bannière ASCII."""
+    print(BANNER)
+
+
+# ------------------------------
 # Configuration
 # ------------------------------
 LEGACY_SALT_SIZE = 8
@@ -123,11 +149,19 @@ def main():
         help="Forcer le format legacy SHA256/1000."
     )
     parser.add_argument(
+        "--no-banner", action="store_true",
+        help="Ne pas afficher la bannière ASCII."
+    )
+    parser.add_argument(
         "--help", action="help",
         help="Afficher ce message d'aide et quitter."
     )
 
     args = parser.parse_args()
+
+    # Affichage de la bannière (désactivable avec --no-banner)
+    if not args.no_banner:
+        print_banner()
 
     if not args.hash and not args.infile:
         parser.print_help()
