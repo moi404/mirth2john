@@ -32,7 +32,7 @@ by : moi404
                          +-+-+-+-+-+-+-+ +-+-+-+-+-+-+
                          |e|t|h|i|c|a|l| |h|a|c|k|e|r|
                          +-+-+-+-+-+-+-+ +-+-+-+-+-+-+
-                              mirth2john v1.0
+                              mirth2john v3.2.8
                   Convert Mirth Connect hashes to John format
 """
 
